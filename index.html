@@ -35,11 +35,40 @@
                 font-size: 20px;
                 font-weight: bold;
             }
-        </style>
+          </style>
     </head>
     <body>
         <h1>Калькулятор приоритета</h1>
-        <p>Формула: P = (IC * 4) + (FP * 3) + (F * 2)</p>
+        <p>Формула: P = (IC * 4) + (FP * 3) + (F * 2) + (TI * 3)</p>
+        <style>
+            .bordered-list {
+                border: 2px solid #000; /* Цвет и толщина рамки */
+                padding: 10px; /* Отступы внутри рамки */
+                width: 200px; /* Ширина контейнера */
+                border-radius: 5px; /* Скругление углов рамки */
+                margin-bottom: 20px; /* Отступ снизу списка */
+                background-color: #eaeaea; /* Цвет фона внутри рамки */
+            }
+
+            .bordered-list ul {
+                list-style-type: none; /* Убираем маркеры */
+                padding: 0; /* Убираем отступы у списка */
+                margin: 0; /* Убираем отступы у списка */
+            }
+
+            .bordered-list li {
+                padding: 5px 0; /* Отступы между строками списка */
+                font-size: 12px; /* Уменьшаем шрифт (например, 12 пикселей) */
+            }
+        </style>
+            <div class="bordered-list">
+            <ul>
+            <li>Влияние на клиентов (IC)</li>
+            <li>Финансовые потери (FP)</li>
+            <li>Частота возникновения (F)</li>
+            <li>Техническое влияние (TI)</li>
+            </ul>
+            </div>
 
         <div class="container">
             <div class="dropdown-wrapper">
@@ -71,6 +100,16 @@
                     <option value="3">3</option>
                 </select>
             </div>
+            
+            <div class="dropdown-wrapper">
+                <label for="ti">TI:</label>
+                <select id="ti">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
         </div>
 
         <div class="result">
@@ -80,329 +119,1289 @@
 
         <style>
             :root {
-                --result: '0';
+                  --result: '0';
 
-                /* Для IC: 0, FP: 0, F: 0 */
-                &:has(#ic [value='0']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='0']:checked) {
-                    --result: '0';
+                /* Для IC: 0, FP: 0, F: 0, TI: 0 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '0';
                 }
 
-                /* Для IC: 0, FP: 0, F: 1 */
-                &:has(#ic [value='0']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='1']:checked) {
-                    --result: '2';
+                /* Для IC: 0, FP: 0, F: 0, TI: 1 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '3';
                 }
 
-                /* Для IC: 0, FP: 0, F: 2 */
-                &:has(#ic [value='0']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='2']:checked) {
-                    --result: '4';
+                /* Для IC: 0, FP: 0, F: 0, TI: 2 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '6';
                 }
 
-                /* Для IC: 0, FP: 0, F: 3 */
-                &:has(#ic [value='0']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='3']:checked) {
-                    --result: '6';
+                /* Для IC: 0, FP: 0, F: 0, TI: 3 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '9';
                 }
 
-                /* Для IC: 0, FP: 1, F: 0 */
-                &:has(#ic [value='0']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='0']:checked) {
-                    --result: '3';
+                /* Для IC: 0, FP: 0, F: 1, TI: 0 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '2';
                 }
 
-                /* Для IC: 0, FP: 1, F: 1 */
-                &:has(#ic [value='0']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='1']:checked) {
-                    --result: '5';
+                /* Для IC: 0, FP: 0, F: 1, TI: 1 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '5';
+                    }
+
+                /* Для IC: 0, FP: 0, F: 1, TI: 2 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '8';
+                }
+
+                /* Для IC: 0, FP: 0, F: 1, TI: 3 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '11';
+                }
+
+                /* Для IC: 0, FP: 0, F: 2, TI: 0 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '4';
+                }
+
+                /* Для IC: 0, FP: 0, F: 2, TI: 1 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '7';
+                }
+
+                /* Для IC: 0, FP: 0, F: 2, TI: 2 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '10';
+                }
+
+                /* Для IC: 0, FP: 0, F: 2, TI: 3 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '13';
+                }
+
+                /* Для IC: 0, FP: 0, F: 3, TI: 0 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '6';
+                }
+
+                /* Для IC: 0, FP: 0, F: 3, TI: 1 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '9';
+                }
+
+                /* Для IC: 0, FP: 0, F: 3, TI: 2 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '12';
+                }
+
+                /* Для IC: 0, FP: 0, F: 3, TI: 3 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '15';
+                }
+
+                /* Для IC: 0, FP: 1, F: 0, TI: 0 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '3';
+                }
+
+                /* Для IC: 0, FP: 1, F: 0, TI: 1 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '6';
+                }
+
+                /* Для IC: 0, FP: 1, F: 0, TI: 2 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '9';
+                }
+
+                /* Для IC: 0, FP: 1, F: 0, TI: 3 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '12';
+                }
+
+                /* Для IC: 0, FP: 1, F: 1, TI: 0 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '5';
+                }
+
+                /* Для IC: 0, FP: 1, F: 1, TI: 1 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '8';
+                }
+
+                /* Для IC: 0, FP: 1, F: 1, TI: 2 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '11';
+                }
+
+                /* Для IC: 0, FP: 1, F: 1, TI: 3 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '14';
+                }
+
+                /* Для IC: 0, FP: 1, F: 2, TI: 0 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '7';
+                }
+
+                /* Для IC: 0, FP: 1, F: 2, TI: 1 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '10';
+                }
+
+                /* Для IC: 0, FP: 1, F: 2, TI: 2 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '13';
+                }
+
+                /* Для IC: 0, FP: 1, F: 2, TI: 3 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '16';
+                }
+
+                /* Для IC: 0, FP: 1, F: 3, TI: 0 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '9';
+                }
+
+                /* Для IC: 0, FP: 1, F: 3, TI: 1 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '12';
+                }
+                
+                /* Для IC: 0, FP: 1, F: 3, TI: 2 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '15';
+                }
+
+                /* Для IC: 0, FP: 1, F: 3, TI: 3 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '18';
+                }
+
+                /* Для IC: 0, FP: 2, F: 0, TI: 0 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '6';
+                }
+
+                /* Для IC: 0, FP: 2, F: 0, TI: 1 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '9';
+                }
+
+                /* Для IC: 0, FP: 2, F: 0, TI: 2 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '12';
+                }
+
+                /* Для IC: 0, FP: 2, F: 0, TI: 3 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '15';
+                }
+
+                /* Для IC: 0, FP: 2, F: 1, TI: 0 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '8';
+                }
+
+                /* Для IC: 0, FP: 2, F: 1, TI: 1 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '11';
+                }
+
+                /* Для IC: 0, FP: 2, F: 1, TI: 2 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '14';
+                }
+
+                /* Для IC: 0, FP: 2, F: 1, TI: 3 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '17';
+                }
+
+                /* Для IC: 0, FP: 2, F: 2, TI: 0 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '10';
+                }
+
+                /* Для IC: 0, FP: 2, F: 2, TI: 1 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '13';
+                }
+
+                /* Для IC: 0, FP: 2, F: 2, TI: 2 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '16';
+                }
+
+                /* Для IC: 0, FP: 2, F: 2, TI: 3 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '19';
+                }
+
+                /* Для IC: 0, FP: 2, F: 3, TI: 0 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '12';
+                }
+
+                /* Для IC: 0, FP: 2, F: 3, TI: 1 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '15';
+                }
+
+                /* Для IC: 0, FP: 2, F: 3, TI: 2 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '18';
+                }
+
+                /* Для IC: 0, FP: 2, F: 3, TI: 3 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '21';
+                }
+
+                /* Для IC: 0, FP: 3, F: 0, TI: 0 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '9';
+                }
+
+                /* Для IC: 0, FP: 3, F: 0, TI: 1 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '12';
+                }
+
+                /* Для IC: 0, FP: 3, F: 0, TI: 2 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '15';
+                }
+
+                /* Для IC: 0, FP: 3, F: 0, TI: 3 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '18';
+                }
+
+                /* Для IC: 0, FP: 3, F: 1, TI: 0 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '11';
+                }
+
+                /* Для IC: 0, FP: 3, F: 1, TI: 1 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '14';
+                }
+
+                /* Для IC: 0, FP: 3, F: 1, TI: 2 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '17';
+                }
+
+                /* Для IC: 0, FP: 3, F: 1, TI: 3 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '20';
+                }
+
+                /* Для IC: 0, FP: 3, F: 2, TI: 0 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '13';
+                }
+
+                /* Для IC: 0, FP: 3, F: 2, TI: 1 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '16';
+                }
+
+                /* Для IC: 0, FP: 3, F: 2, TI: 2 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '19';
+                }
+
+                /* Для IC: 0, FP: 3, F: 2, TI: 3 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '22';
+                }
+
+                /* Для IC: 0, FP: 3, F: 3, TI: 0 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '15';
+                }
+
+                /* Для IC: 0, FP: 3, F: 3, TI: 1 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '18';
+                }
+
+                /* Для IC: 0, FP: 3, F: 3, TI: 2 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '21';
+                }
+
+                /* Для IC: 0, FP: 3, F: 3, TI: 3 */
+                &:has(#ic [value='0']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '24';
+                }
+                
+                /* Для IC: 1, FP: 0, F: 0, TI: 0 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '4';
+                }
+
+                /* Для IC: 1, FP: 0, F: 0, TI: 1 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '7';
+                }
+
+                /* Для IC: 1, FP: 0, F: 0, TI: 2 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '10';
+                }
+
+                /* Для IC: 1, FP: 0, F: 0, TI: 3 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '13';
+                }
+
+                /* Для IC: 1, FP: 0, F: 1, TI: 0 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '6';
+                }
+
+                /* Для IC: 1, FP: 0, F: 1, TI: 1 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '9';
+                }
+
+                /* Для IC: 1, FP: 0, F: 1, TI: 2 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '12';
+                }
+
+                /* Для IC: 1, FP: 0, F: 1, TI: 3 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '15';
+                }
+
+                /* Для IC: 1, FP: 0, F: 2, TI: 0 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '8';
+                }
+
+                /* Для IC: 1, FP: 0, F: 2, TI: 1 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '11';
+                }
+
+                /* Для IC: 1, FP: 0, F: 2, TI: 2 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '14';
+                }
+
+                /* Для IC: 1, FP: 0, F: 2, TI: 3 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '17';
+                }
+
+                /* Для IC: 1, FP: 0, F: 3, TI: 0 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '10';
+                }
+
+                /* Для IC: 1, FP: 0, F: 3, TI: 1 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '13';
+                }
+
+                /* Для IC: 1, FP: 0, F: 3, TI: 2 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '16';
+                }
+
+                /* Для IC: 1, FP: 0, F: 3, TI: 3 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '19';
+                }
+
+                /* Для IC: 1, FP: 1, F: 0, TI: 0 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '7';
+                }
+
+                /* Для IC: 1, FP: 1, F: 0, TI: 1 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '10';
+                }
+
+                /* Для IC: 1, FP: 1, F: 0, TI: 2 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '13';
+                }
+
+                /* Для IC: 1, FP: 1, F: 0, TI: 3 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '16';
+                }
+
+                /* Для IC: 1, FP: 1, F: 1, TI: 0 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '9';
+                }
+
+                /* Для IC: 1, FP: 1, F: 1, TI: 1 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '12';
+                }
+
+                /* Для IC: 1, FP: 1, F: 1, TI: 2 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '15';
+                }
+
+                /* Для IC: 1, FP: 1, F: 1, TI: 3 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '18';
+                }
+
+                /* Для IC: 1, FP: 1, F: 2, TI: 0 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '11';
+                }
+
+                /* Для IC: 1, FP: 1, F: 2, TI: 1 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '14';
+                }
+
+                /* Для IC: 1, FP: 1, F: 2, TI: 2 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '17';
+                }
+
+                /* Для IC: 1, FP: 1, F: 2, TI: 3 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '20';
+                }
+
+                /* Для IC: 1, FP: 1, F: 3, TI: 0 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '13';
+                }
+
+                /* Для IC: 1, FP: 1, F: 3, TI: 1 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '16';
+                }
+
+                /* Для IC: 1, FP: 1, F: 3, TI: 2 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '19';
+                }
+
+                /* Для IC: 1, FP: 1, F: 3, TI: 3 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '22';
+                }
+
+                /* Для IC: 1, FP: 2, F: 0, TI: 0 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '10';
+                }
+
+                /* Для IC: 1, FP: 2, F: 0, TI: 1 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '13';
+                }
+
+                /* Для IC: 1, FP: 2, F: 0, TI: 2 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '16';
+                }
+
+                /* Для IC: 1, FP: 2, F: 0, TI: 3 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '19';
+                }
+
+                /* Для IC: 1, FP: 2, F: 1, TI: 0 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '12';
+                }
+
+                /* Для IC: 1, FP: 2, F: 1, TI: 1 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '15';
+                }
+
+                /* Для IC: 1, FP: 2, F: 1, TI: 2 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '18';
+                }
+
+                /* Для IC: 1, FP: 2, F: 1, TI: 3 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '21';
+                }
+
+                /* Для IC: 1, FP: 2, F: 2, TI: 0 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '14';
+                }
+
+                /* Для IC: 1, FP: 2, F: 2, TI: 1 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '17';
+                }
+
+                /* Для IC: 1, FP: 2, F: 2, TI: 2 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '20';
+                }
+
+                /* Для IC: 1, FP: 2, F: 2, TI: 3 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '23';
+                }
+
+                /* Для IC: 1, FP: 2, F: 3, TI: 0 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '16';
+                }
+
+                /* Для IC: 1, FP: 2, F: 3, TI: 1 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '19';
+                }
+
+                /* Для IC: 1, FP: 2, F: 3, TI: 2 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '22';
+                }
+
+                /* Для IC: 1, FP: 2, F: 3, TI: 3 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '25';
+                }
+
+                /* Для IC: 1, FP: 3, F: 0, TI: 0 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '13';
+                }
+
+                /* Для IC: 1, FP: 3, F: 0, TI: 1 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '16';
+                }
+
+                /* Для IC: 1, FP: 3, F: 0, TI: 2 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '19';
+                }
+
+                /* Для IC: 1, FP: 3, F: 0, TI: 3 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '22';
+                }
+
+                /* Для IC: 1, FP: 3, F: 1, TI: 0 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '15';
+                }
+
+                /* Для IC: 1, FP: 3, F: 1, TI: 1 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '18';
+                }
+
+                /* Для IC: 1, FP: 3, F: 1, TI: 2 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '21';
+                }
+
+                /* Для IC: 1, FP: 3, F: 1, TI: 3 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '24';
+                }
+
+                /* Для IC: 1, FP: 3, F: 2, TI: 0 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '17';
+                }
+
+                /* Для IC: 1, FP: 3, F: 2, TI: 1 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '20';
+                }
+
+                /* Для IC: 1, FP: 3, F: 2, TI: 2 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '23';
+                }
+
+                /* Для IC: 1, FP: 3, F: 2, TI: 3 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '26';
+                }
+
+                /* Для IC: 1, FP: 3, F: 3, TI: 0 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '19';
+                }
+
+                /* Для IC: 1, FP: 3, F: 3, TI: 1 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '22';
+                }
+
+                /* Для IC: 1, FP: 3, F: 3, TI: 2 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '25';
+                }
+
+                /* Для IC: 1, FP: 3, F: 3, TI: 3 */
+                &:has(#ic [value='1']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '28';
+                }
+
+                /* Для IC: 2, FP: 0, F: 0, TI: 0 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '8';
+                }
+
+                /* Для IC: 2, FP: 0, F: 0, TI: 1 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '11';
+                }
+
+                /* Для IC: 2, FP: 0, F: 0, TI: 2 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '14';
+                }
+
+                /* Для IC: 2, FP: 0, F: 0, TI: 3 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '17';
+                }
+
+                /* Для IC: 2, FP: 0, F: 1, TI: 0 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '10';
+                }
+
+                /* Для IC: 2, FP: 0, F: 1, TI: 1 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '13';
+                }
+
+                /* Для IC: 2, FP: 0, F: 1, TI: 2 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '16';
+                }
+
+                /* Для IC: 2, FP: 0, F: 1, TI: 3 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '19';
+                }
+
+                /* Для IC: 2, FP: 0, F: 2, TI: 0 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '12';
+                }
+
+                /* Для IC: 2, FP: 0, F: 2, TI: 1 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '15';
+                }
+
+                /* Для IC: 2, FP: 0, F: 2, TI: 2 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '18';
+                }
+
+                /* Для IC: 2, FP: 0, F: 2, TI: 3 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '21';
+                }
+
+                /* Для IC: 2, FP: 0, F: 3, TI: 0 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '14';
+                }
+
+                /* Для IC: 2, FP: 0, F: 3, TI: 1 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '17';
+                }
+
+                /* Для IC: 2, FP: 0, F: 3, TI: 2 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '20';
+                }
+
+                /* Для IC: 2, FP: 0, F: 3, TI: 3 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '23';
+                }
+
+                /* Для IC: 2, FP: 1, F: 0, TI: 0 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '11';
+                }
+
+                /* Для IC: 2, FP: 1, F: 0, TI: 1 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '14';
+                }
+
+                /* Для IC: 2, FP: 1, F: 0, TI: 2 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '17';
+                }
+
+                /* Для IC: 2, FP: 1, F: 0, TI: 3 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '20';
+                }
+
+                /* Для IC: 2, FP: 1, F: 1, TI: 0 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '13';
+                }
+
+                /* Для IC: 2, FP: 1, F: 1, TI: 1 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '16';
                 }
 
-                /* Для IC: 0, FP: 1, F: 2 */
-                &:has(#ic [value='0']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='2']:checked) {
-                    --result: '7';
+                /* Для IC: 2, FP: 1, F: 1, TI: 2 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '19';
                 }
 
-                /* Для IC: 0, FP: 1, F: 3 */
-                &:has(#ic [value='0']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='3']:checked) {
-                    --result: '9';
+                /* Для IC: 2, FP: 1, F: 1, TI: 3 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '22';
                 }
 
-                /* Для IC: 0, FP: 2, F: 0 */
-                &:has(#ic [value='0']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='0']:checked) {
-                    --result: '6';
+                /* Для IC: 2, FP: 1, F: 2, TI: 0 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '15';
                 }
 
-                /* Для IC: 0, FP: 2, F: 1 */
-                &:has(#ic [value='0']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='1']:checked) {
-                    --result: '8';
+                /* Для IC: 2, FP: 1, F: 2, TI: 1 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '18';
                 }
 
-                /* Для IC: 0, FP: 2, F: 2 */
-                &:has(#ic [value='0']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='2']:checked) {
-                    --result: '10';
+                /* Для IC: 2, FP: 1, F: 2, TI: 2 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '21';
                 }
 
-                /* Для IC: 0, FP: 2, F: 3 */
-                &:has(#ic [value='0']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='3']:checked) {
-                    --result: '12';
+                /* Для IC: 2, FP: 1, F: 2, TI: 3 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '24';
                 }
 
-                /* Для IC: 0, FP: 3, F: 0 */
-                &:has(#ic [value='0']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='0']:checked) {
-                    --result: '9';
+                /* Для IC: 2, FP: 1, F: 3, TI: 0 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '17';
                 }
 
-                /* Для IC: 0, FP: 3, F: 1 */
-                &:has(#ic [value='0']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='1']:checked) {
-                    --result: '11';
+                /* Для IC: 2, FP: 1, F: 3, TI: 1 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '20';
                 }
 
-                /* Для IC: 0, FP: 3, F: 2 */
-                &:has(#ic [value='0']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='2']:checked) {
-                    --result: '13';
+                /* Для IC: 2, FP: 1, F: 3, TI: 2 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '23';
                 }
 
-                /* Для IC: 0, FP: 3, F: 3 */
-                &:has(#ic [value='0']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='3']:checked) {
-                    --result: '15';
+                /* Для IC: 2, FP: 1, F: 3, TI: 3 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '26';
                 }
 
-                /* Для IC: 1, FP: 0, F: 0 */
-                &:has(#ic [value='1']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='0']:checked) {
-                    --result: '4';
+                /* Для IC: 2, FP: 2, F: 0, TI: 0 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '14';
                 }
 
-                /* Для IC: 1, FP: 0, F: 1 */
-                &:has(#ic [value='1']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='1']:checked) {
-                    --result: '6';
+                /* Для IC: 2, FP: 2, F: 0, TI: 1 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '17';
                 }
 
-                /* Для IC: 1, FP: 0, F: 2 */
-                &:has(#ic [value='1']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='2']:checked) {
-                    --result: '8';
+                /* Для IC: 2, FP: 2, F: 0, TI: 2 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '20';
                 }
 
-                /* Для IC: 1, FP: 0, F: 3 */
-                &:has(#ic [value='1']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='3']:checked) {
-                    --result: '10';
+                /* Для IC: 2, FP: 2, F: 0, TI: 3 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '23';
                 }
 
-                /* Для IC: 1, FP: 1, F: 0 */
-                &:has(#ic [value='1']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='0']:checked) {
-                    --result: '7';
+                /* Для IC: 2, FP: 2, F: 1, TI: 0 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '16';
                 }
 
-                /* Для IC: 1, FP: 1, F: 1 */
-                &:has(#ic [value='1']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='1']:checked) {
-                    --result: '9';
+                /* Для IC: 2, FP: 2, F: 1, TI: 1 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '19';
                 }
 
-                /* Для IC: 1, FP: 1, F: 2 */
-                &:has(#ic [value='1']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='2']:checked) {
-                    --result: '11';
+                /* Для IC: 2, FP: 2, F: 1, TI: 2 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '22';
                 }
 
-                /* Для IC: 1, FP: 1, F: 3 */
-                &:has(#ic [value='1']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='3']:checked) {
-                    --result: '13';
+                /* Для IC: 2, FP: 2, F: 1, TI: 3 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '25';
                 }
 
-                /* Для IC: 1, FP: 2, F: 0 */
-                &:has(#ic [value='1']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='0']:checked) {
-                    --result: '10';
+                /* Для IC: 2, FP: 2, F: 2, TI: 0 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '18';
                 }
 
-                /* Для IC: 1, FP: 2, F: 1 */
-                &:has(#ic [value='1']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='1']:checked) {
-                    --result: '12';
+                /* Для IC: 2, FP: 2, F: 2, TI: 1 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '21';
                 }
 
-                /* Для IC: 1, FP: 2, F: 2 */
-                &:has(#ic [value='1']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='2']:checked) {
-                    --result: '14';
+                /* Для IC: 2, FP: 2, F: 2, TI: 2 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '24';
                 }
 
-                /* Для IC: 1, FP: 2, F: 3 */
-                &:has(#ic [value='1']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='3']:checked) {
-                    --result: '16';
+                /* Для IC: 2, FP: 2, F: 2, TI: 3 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '27';
                 }
 
-                /* Для IC: 1, FP: 3, F: 0 */
-                &:has(#ic [value='1']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='0']:checked) {
-                    --result: '13';
+                /* Для IC: 2, FP: 2, F: 3, TI: 0 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '20';
                 }
 
-                /* Для IC: 1, FP: 3, F: 1 */
-                &:has(#ic [value='1']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='1']:checked) {
-                    --result: '15';
+                /* Для IC: 2, FP: 2, F: 3, TI: 1 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '23';
                 }
 
-                /* Для IC: 1, FP: 3, F: 2 */
-                &:has(#ic [value='1']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='2']:checked) {
-                    --result: '17';
+                /* Для IC: 2, FP: 2, F: 3, TI: 2 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '26';
                 }
 
-                /* Для IC: 1, FP: 3, F: 3 */
-                &:has(#ic [value='1']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='3']:checked) {
-                    --result: '19';
+                /* Для IC: 2, FP: 2, F: 3, TI: 3 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '29';
                 }
 
-                /* Для IC: 2, FP: 0, F: 0 */
-                &:has(#ic [value='2']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='0']:checked) {
-                    --result: '8';
+                /* Для IC: 2, FP: 3, F: 0, TI: 0 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '17';
                 }
 
-                /* Для IC: 2, FP: 0, F: 1 */
-                &:has(#ic [value='2']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='1']:checked) {
-                    --result: '10';
+                /* Для IC: 2, FP: 3, F: 0, TI: 1 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '20';
                 }
 
-                /* Для IC: 2, FP: 0, F: 2 */
-                &:has(#ic [value='2']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='2']:checked) {
-                    --result: '12';
+                /* Для IC: 2, FP: 3, F: 0, TI: 2 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '23';
                 }
 
-                /* Для IC: 2, FP: 0, F: 3 */
-                &:has(#ic [value='2']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='3']:checked) {
-                    --result: '14';
+                /* Для IC: 2, FP: 3, F: 0, TI: 3 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '26';
                 }
 
-                /* Для IC: 2, FP: 1, F: 0 */
-                &:has(#ic [value='2']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='0']:checked) {
-                    --result: '11';
+                /* Для IC: 2, FP: 3, F: 1, TI: 0 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '19';
                 }
 
-                /* Для IC: 2, FP: 1, F: 1 */
-                &:has(#ic [value='2']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='1']:checked) {
-                    --result: '13';
+                /* Для IC: 2, FP: 3, F: 1, TI: 1 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '22';
                 }
 
-                /* Для IC: 2, FP: 1, F: 2 */
-                &:has(#ic [value='2']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='2']:checked) {
-                    --result: '15';
+                /* Для IC: 2, FP: 3, F: 1, TI: 2 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '25';
                 }
 
-                /* Для IC: 2, FP: 1, F: 3 */
-                &:has(#ic [value='2']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='3']:checked) {
-                    --result: '17';
+                /* Для IC: 2, FP: 3, F: 1, TI: 3 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '28';
                 }
 
-                /* Для IC: 2, FP: 2, F: 0 */
-                &:has(#ic [value='2']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='0']:checked) {
-                    --result: '14';
+                /* Для IC: 2, FP: 3, F: 2, TI: 0 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '21';
                 }
 
-                /* Для IC: 2, FP: 2, F: 1 */
-                &:has(#ic [value='2']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='1']:checked) {
-                    --result: '16';
+                /* Для IC: 2, FP: 3, F: 2, TI: 1 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '24';
                 }
 
-                /* Для IC: 2, FP: 2, F: 2 */
-                &:has(#ic [value='2']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='2']:checked) {
-                    --result: '18';
+                /* Для IC: 2, FP: 3, F: 2, TI: 2 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '27';
                 }
 
-                /* Для IC: 2, FP: 2, F: 3 */
-                &:has(#ic [value='2']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='3']:checked) {
-                    --result: '20';
+                /* Для IC: 2, FP: 3, F: 2, TI: 3 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '30';
                 }
 
-                /* Для IC: 2, FP: 3, F: 0 */
-                &:has(#ic [value='2']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='0']:checked) {
-                    --result: '17';
+                /* Для IC: 2, FP: 3, F: 3, TI: 0 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '23';
                 }
 
-                /* Для IC: 2, FP: 3, F: 1 */
-                &:has(#ic [value='2']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='1']:checked) {
-                    --result: '19';
+                /* Для IC: 2, FP: 3, F: 3, TI: 1 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '26';
                 }
 
-                /* Для IC: 2, FP: 3, F: 2 */
-                &:has(#ic [value='2']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='2']:checked) {
-                    --result: '21';
+                /* Для IC: 2, FP: 3, F: 3, TI: 2 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '29';
                 }
 
-                /* Для IC: 2, FP: 3, F: 3 */
-                &:has(#ic [value='2']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='3']:checked) {
-                    --result: '23';
+                /* Для IC: 2, FP: 3, F: 3, TI: 3 */
+                &:has(#ic [value='2']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '32';
                 }
 
-                /* Для IC: 3, FP: 0, F: 0 */
-                &:has(#ic [value='3']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='0']:checked) {
-                    --result: '12';
+                /* Для IC: 3, FP: 0, F: 0, TI: 0 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '12';
                 }
 
-                /* Для IC: 3, FP: 0, F: 1 */
-                &:has(#ic [value='3']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='1']:checked) {
-                    --result: '14';
+                /* Для IC: 3, FP: 0, F: 0, TI: 1 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '15';
                 }
 
-                /* Для IC: 3, FP: 0, F: 2 */
-                &:has(#ic [value='3']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='2']:checked) {
-                    --result: '16';
+                /* Для IC: 3, FP: 0, F: 0, TI: 2 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '18';
                 }
 
-                /* Для IC: 3, FP: 0, F: 3 */
-                &:has(#ic [value='3']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='3']:checked) {
-                    --result: '18';
+                /* Для IC: 3, FP: 0, F: 0, TI: 3 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '21';
                 }
 
-                /* Для IC: 3, FP: 1, F: 0 */
-                &:has(#ic [value='3']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='0']:checked) {
-                    --result: '15';
+                /* Для IC: 3, FP: 0, F: 1, TI: 0 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '14';
                 }
 
-                /* Для IC: 3, FP: 1, F: 1 */
-                &:has(#ic [value='3']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='1']:checked) {
-                    --result: '17';
+                /* Для IC: 3, FP: 0, F: 1, TI: 1 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '17';
                 }
 
-                /* Для IC: 3, FP: 1, F: 2 */
-                &:has(#ic [value='3']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='2']:checked) {
-                    --result: '19';
+                /* Для IC: 3, FP: 0, F: 1, TI: 2 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '20';
                 }
 
-                /* Для IC: 3, FP: 1, F: 3 */
-                &:has(#ic [value='3']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='3']:checked) {
-                    --result: '21';
+                /* Для IC: 3, FP: 0, F: 1, TI: 3 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '23';
                 }
 
-                /* Для IC: 3, FP: 2, F: 0 */
-                &:has(#ic [value='3']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='0']:checked) {
-                    --result: '18';
+                /* Для IC: 3, FP: 0, F: 2, TI: 0 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '16';
                 }
 
-                /* Для IC: 3, FP: 2, F: 1 */
-                &:has(#ic [value='3']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='1']:checked) {
-                    --result: '20';
+                /* Для IC: 3, FP: 0, F: 2, TI: 1 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '19';
                 }
 
-                /* Для IC: 3, FP: 2, F: 2 */
-                &:has(#ic [value='3']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='2']:checked) {
-                    --result: '22';
+                /* Для IC: 3, FP: 0, F: 2, TI: 2 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '22';
                 }
 
-                /* Для IC: 3, FP: 2, F: 3 */
-                &:has(#ic [value='3']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='3']:checked) {
-                    --result: '24';
+                /* Для IC: 3, FP: 0, F: 2, TI: 3 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '25';
                 }
 
-                /* Для IC: 3, FP: 3, F: 0 */
-                &:has(#ic [value='3']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='0']:checked) {
-                    --result: '21';
+                /* Для IC: 3, FP: 0, F: 3, TI: 0 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '18';
                 }
 
-                /* Для IC: 3, FP: 3, F: 1 */
-                &:has(#ic [value='3']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='1']:checked) {
-                    --result: '23';
+                /* Для IC: 3, FP: 0, F: 3, TI: 1 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '21';
                 }
 
-                /* Для IC: 3, FP: 3, F: 2 */
-                &:has(#ic [value='3']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='2']:checked) {
-                    --result: '25';
+                /* Для IC: 3, FP: 0, F: 3, TI: 2 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '24';
                 }
 
-                /* Для IC: 3, FP: 3, F: 3 */
-                &:has(#ic [value='3']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='3']:checked) {
-                    --result: '27';
+                /* Для IC: 3, FP: 0, F: 3, TI: 3 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='0']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '27';
                 }
-            }
 
+                /* Для IC: 3, FP: 1, F: 0, TI: 0 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '15';
+                }
+
+                /* Для IC: 3, FP: 1, F: 0, TI: 1 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '18';
+                }
+
+                /* Для IC: 3, FP: 1, F: 0, TI: 2 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '21';
+                }
+
+                /* Для IC: 3, FP: 1, F: 0, TI: 3 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '24';
+                }
+
+                /* Для IC: 3, FP: 1, F: 1, TI: 0 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '17';
+                }
+
+                /* Для IC: 3, FP: 1, F: 1, TI: 1 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '20';
+                }
+
+                /* Для IC: 3, FP: 1, F: 1, TI: 2 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '23';
+                }
+
+                /* Для IC: 3, FP: 1, F: 1, TI: 3 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '26';
+                }
+
+                /* Для IC: 3, FP: 1, F: 2, TI: 0 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '19';
+                }
+
+                /* Для IC: 3, FP: 1, F: 2, TI: 1 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '22';
+                }
+
+                /* Для IC: 3, FP: 1, F: 2, TI: 2 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '25';
+                }
+
+                /* Для IC: 3, FP: 1, F: 2, TI: 3 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '28';
+                }
+
+                /* Для IC: 3, FP: 1, F: 3, TI: 0 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '21';
+                }
+
+                /* Для IC: 3, FP: 1, F: 3, TI: 1 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '24';
+                }
+
+                /* Для IC: 3, FP: 1, F: 3, TI: 2 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '27';
+                }
+
+                /* Для IC: 3, FP: 1, F: 3, TI: 3 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='1']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '30';
+                }
+
+                /* Для IC: 3, FP: 2, F: 0, TI: 0 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '18';
+                }
+
+                /* Для IC: 3, FP: 2, F: 0, TI: 1 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '21';
+                }
+
+                /* Для IC: 3, FP: 2, F: 0, TI: 2 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '24';
+                }
+
+                /* Для IC: 3, FP: 2, F: 0, TI: 3 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '27';
+                }
+
+                /* Для IC: 3, FP: 2, F: 1, TI: 0 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '20';
+                }
+
+                /* Для IC: 3, FP: 2, F: 1, TI: 1 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '23';
+                }
+
+                /* Для IC: 3, FP: 2, F: 1, TI: 2 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '26';
+                }
+
+                /* Для IC: 3, FP: 2, F: 1, TI: 3 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '29';
+                }
+
+                /* Для IC: 3, FP: 2, F: 2, TI: 0 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '22';
+                }
+
+                /* Для IC: 3, FP: 2, F: 2, TI: 1 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '25';
+                }
+
+                /* Для IC: 3, FP: 2, F: 2, TI: 2 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '28';
+                }
+
+                /* Для IC: 3, FP: 2, F: 2, TI: 3 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '31';
+                }
+
+                /* Для IC: 3, FP: 2, F: 3, TI: 0 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '24';
+                }
+
+                /* Для IC: 3, FP: 2, F: 3, TI: 1 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '27';
+                }
+
+                /* Для IC: 3, FP: 2, F: 3, TI: 2 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '30';
+                }
+
+                /* Для IC: 3, FP: 2, F: 3, TI: 3 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='2']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '33';
+                }
+
+                /* Для IC: 3, FP: 3, F: 0, TI: 0 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '21';
+                }
+
+                /* Для IC: 3, FP: 3, F: 0, TI: 1 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '24';
+                }
+
+                /* Для IC: 3, FP: 3, F: 0, TI: 2 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '27';
+                }
+
+                /* Для IC: 3, FP: 3, F: 0, TI: 3 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='0']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '30';
+                }
+
+                /* Для IC: 3, FP: 3, F: 1, TI: 0 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '23';
+                }
+
+                /* Для IC: 3, FP: 3, F: 1, TI: 1 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '26';
+                }
+
+                /* Для IC: 3, FP: 3, F: 1, TI: 2 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '29';
+                }
+
+                /* Для IC: 3, FP: 3, F: 1, TI: 3 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='1']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '32';
+                }
+
+                /* Для IC: 3, FP: 3, F: 2, TI: 0 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '25';
+                }
+
+                /* Для IC: 3, FP: 3, F: 2, TI: 1 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '28';
+                }
+
+                /* Для IC: 3, FP: 3, F: 2, TI: 2 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '31';
+                }
+
+                /* Для IC: 3, FP: 3, F: 2, TI: 3 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='2']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '34';
+                }
+
+                /* Для IC: 3, FP: 3, F: 3, TI: 0 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='0']:checked) {
+                  --result: '27';
+                }
+
+                /* Для IC: 3, FP: 3, F: 3, TI: 1 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='1']:checked) {
+                  --result: '30';
+                }
+
+                /* Для IC: 3, FP: 3, F: 3, TI: 2 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='2']:checked) {
+                  --result: '33';
+                }
+
+                /* Для IC: 3, FP: 3, F: 3, TI: 3 */
+                &:has(#ic [value='3']:checked)&:has(#fp [value='3']:checked)&:has(#f [value='3']:checked)&:has(#ti [value='3']:checked) {
+                  --result: '36';
+                }
+              }
+            
             #result::after {
                 content: var(--result);
             }
